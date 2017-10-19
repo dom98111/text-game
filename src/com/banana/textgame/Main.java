@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
         // вызывает метод start()
         new Main().start();
-    }
+    }         ~~                      с
 
     /*
      * Метод с логикой игры.
@@ -22,7 +22,7 @@ public class Main {
     }
 
     /*
-     * Метод вызывается один раз при старте игры.
+     * Метод вызывается один раз при старте игры
      */
     void onStart() {
 
