@@ -41,7 +41,7 @@ public class Main {
 
     /*
      * Метод вызывается каждый игровый день.
-     * Единственный параметр: dayNumber - номер текущего игрового дня.
+     * Единственный параметр: dayNumber - номер текущего игрового дня
      */
     void onNewDay(int dayNumber) {
         System.out.println("day " + dayNumber);
