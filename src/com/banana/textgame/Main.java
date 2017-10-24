@@ -38,13 +38,21 @@ public class Main {
         System.out.println("Имя " + имя);
 
     }
-
+    int ОбщийЗаработок = 0;
     /*
      * Метод вызывается каждый игровый день.
      * Единственный параметр: dayNumber - номер текущего игрового дня
      */
     void onNewDay(int dayNumber) {
         System.out.println("day " + dayNumber);
+        Scanner клавиатура = new Scanner(System.in);
+        System.out.println("Введите код: ");
+        String код = клавиатура.nextLine();
+        код = код.replace(" ","");
+        int заработок = код.length();
+        ОбщийЗаработок = ОбщийЗаработок + заработок;
+        System.out.println("Всего заработано " + ОбщийЗаработок + "$.");
+
     }
 
     /*
