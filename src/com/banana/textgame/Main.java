@@ -46,10 +46,10 @@ public class Main {
     String[] доступныеЯзыки = {"java", "Kotlin", "JavaScript", "Ada", "Python"};
     boolean[] изученныеЯзыки = {true, false, true, false, false};
     Scanner клавиатура = new Scanner(System.in);
-    int dollars = 0;
+    int dollars;
 
 
-    int ОбщийЗаработок = 0;
+    int ОбщийЗаработок;
     int mood = 3;
     ArrayList<String> компании = new ArrayList<>();
      /* Метод вызывается каждый игровый день.
@@ -86,7 +86,9 @@ public class Main {
             case "шаверма":
                 System.out.println("Окей, съелки шаверму");
             break;
-
+            case "кости":
+                броситьКости();
+            break;
             case "пельмешки":
                 System.out.println("Вы съели " + скушатьПельмешки() + "шт пельменей");
             break;
@@ -141,10 +143,21 @@ public class Main {
         }
     }
     int скушатьПельмешки () {
-        System.out.println("Сколько пельмешек вы хотите скушать?");
-        int количествоПельмешек = клавиатура.nextInt();
-        скушатьПельмешки(количествоПельмешек);
-        return количествоПельмешек;
+        boolean количествоВведено = false;
+        int количествоПельмешек = 0;
+        while(количествоВведено == false) {
+            System.out.println("Сколько пельмешек вы хотите скушать?");
+            String строка = клавиатура.nextLine();
+            try {
+                количествоПельмешек = Integer.parseInt(строка);
+                скушатьПельмешки(количествоПельмешек);
+                количествоВведено = true;
+            } catch (Exception e) {
+                System.out.println("Введите цифры!");
+            }
+        }
+            return количествоПельмешек;
+
     }
     void скушатьПельмешки (int количествоПельмешек) {
         dollars = dollars + количествоПельмешек * 5;
@@ -177,5 +190,19 @@ public class Main {
         else {
             System.out.println("Вы там не работаете!");
         }
+    }
+
+    int броситьКости() {
+        int число1 = (int) (Math.random() * 6 + 1);
+        int число2 = (int) (Math.random() * 6 + 1);
+        System.out.println("вам выпали: " + число1 + число2);
+        if (Math.max(число1, число2) % 2 == 0) {
+            System.out.println("Ура, вы выйграли!");
+            dollars = dollars + 28;
+        } else {
+            System.out.println("Вы проиграли!");
+            dollars = dollars - 50;
+            }
+        return число1;
     }
 }
