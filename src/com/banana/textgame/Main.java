@@ -5,9 +5,12 @@ import java.util.Scanner;
 
 public class Main {
 
-    /*
-     * Главный метод.
-     */
+
+    String[] доступныеЯзыки = {"java", "Kotlin", "JavaScript", "Ada", "Python"};
+    Scanner клавиатура = new Scanner(System.in);
+    User пользователь = new User();
+
+
     public static void main(String[] args) {
         // вызывает метод start()
         new Main().start();
@@ -40,30 +43,15 @@ public class Main {
         System.out.println("Имя " + имя);
     }
 
-
-
-    /* ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ */
-    String[] доступныеЯзыки = {"java", "Kotlin", "JavaScript", "Ada", "Python"};
-    boolean[] изученныеЯзыки = {true, false, true, false, false};
-    Scanner клавиатура = new Scanner(System.in);
-    int dollars;
-
-
-    int ОбщийЗаработок;
-    int mood = 3;
-    ArrayList<String> компании = new ArrayList<>();
-     /* Метод вызывается каждый игровый день.
-     * Единственный параметр: dayNumber - номер текущего игрового дня
-     */
     void onNewDay(int dayNumber) {
         System.out.println("day " + dayNumber);
         String smiles = "";
-        for (int i=1; i <= mood; i = i + 1) {
+        for (int i=1; i <= пользователь.mood; i = i + 1) {
             smiles = smiles + "xD";
         }
         System.out.println("Ваше настроение: " + smiles);
         напечатайИзученныеЯзыки();
-        System.out.println("компании, в которых работаете: " + компании + ".");
+        System.out.println("компании, в которых работаете: " + пользователь.компании + ".");
         System.out.println("Что будем делать?");
         String action = клавиатура.nextLine();
         switch (action.toLowerCase()) {
@@ -81,7 +69,7 @@ public class Main {
                 String код = клавиатура.nextLine();
                 код = код.replace(" ","");
                 int заработок = код.length();
-                ОбщийЗаработок = ОбщийЗаработок + заработок;
+                пользователь.ОбщийЗаработок = пользователь.ОбщийЗаработок + заработок;
             break;
             case "шаверма":
                 System.out.println("Окей, съелки шаверму");
@@ -100,7 +88,7 @@ public class Main {
             default: System.out.println("Ошибка ввода");
         }
 
-        System.out.println("Всего заработано " + ОбщийЗаработок + "$.");
+        System.out.println("Всего заработано " + пользователь.ОбщийЗаработок + "$.");
 
 
     }
@@ -119,16 +107,16 @@ public class Main {
         String выбранныйЯзык = клавиатура.nextLine();
 
         for (int i = 0; i < доступныеЯзыки.length; i++) {
-            if (доступныеЯзыки[i].equals(выбранныйЯзык) && (изученныеЯзыки[i] ==  false)
-                    && mood > 0
-                    && dollars >= 20) {
-                изученныеЯзыки[i] = true;
-                dollars -= 20;
-                mood -= 1;
-            } else if (mood == 0) {
+            if (доступныеЯзыки[i].equals(выбранныйЯзык) && (пользователь.изученныеЯзыки[i] ==  false)
+                    && пользователь.mood > 0
+                    && пользователь.dollars >= 20) {
+                пользователь.изученныеЯзыки[i] = true;
+                пользователь.dollars -= 20;
+                пользователь.mood -= 1;
+            } else if (пользователь.mood == 0) {
                 System.out.println("Вам слишком грустно");
             }
-            else if (dollars <= 0) {
+            else if (пользователь.dollars <= 0) {
                 System.out.println("Вам слишком грустно");
             }
         }
@@ -136,8 +124,8 @@ public class Main {
 
     void напечатайИзученныеЯзыки() {
         System.out.println("Вы знаете языки?");
-        for (int i = 0; i < изученныеЯзыки.length; i++) {
-            if (изученныеЯзыки[i] == true) {
+        for (int i = 0; i < пользователь.изученныеЯзыки.length; i++) {
+            if (пользователь.изученныеЯзыки[i] == true) {
                 System.out.println(" - " + доступныеЯзыки[i]);
             }
         }
@@ -160,15 +148,15 @@ public class Main {
 
     }
     void скушатьПельмешки (int количествоПельмешек) {
-        dollars = dollars + количествоПельмешек * 5;
-        mood = mood + 2 * количествоПельмешек;
+        пользователь.dollars = пользователь.dollars + количествоПельмешек * 5;
+        пользователь.mood = пользователь.mood + 2 * количествоПельмешек;
 
     }
 
     int набранныеОчки () {
-        int очки = dollars * 2 + mood * 6;
-        for (int i = 0; i < изученныеЯзыки.length; i++){
-           if (изученныеЯзыки[i] == true){
+        int очки = пользователь.dollars * 2 + пользователь.mood * 6;
+        for (int i = 0; i < пользователь.изученныеЯзыки.length; i++){
+           if (пользователь.изученныеЯзыки[i] == true){
                очки = очки + 10;
            }
         }
@@ -177,14 +165,14 @@ public class Main {
     void найтиРаботу() {
         System.out.println("В какой компании хотите работать?");
         String компания = клавиатура.nextLine();
-        компании.add(компания);
+        пользователь.компании.add(компания);
 
     }
     void уволитьсясРаботы() {
         System.out.println("С какой работы вы собираетсь уволиться?");
         String компания = клавиатура.nextLine();
-        if (компании.contains(компания) == true){
-            компании.remove(компания);
+        if (пользователь.компании.contains(компания) == true){
+            пользователь.компании.remove(компания);
             System.out.println("Вы успешно уволились с работы!");
         }
         else {
@@ -198,10 +186,10 @@ public class Main {
         System.out.println("вам выпали: " + число1 + число2);
         if (Math.max(число1, число2) % 2 == 0) {
             System.out.println("Ура, вы выйграли!");
-            dollars = dollars + 28;
+            пользователь.dollars = пользователь.dollars + 28;
         } else {
             System.out.println("Вы проиграли!");
-            dollars = dollars - 50;
+            пользователь.dollars = пользователь.dollars - 50;
             }
         return число1;
     }
